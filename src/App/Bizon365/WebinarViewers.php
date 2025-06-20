@@ -65,6 +65,42 @@ trait WebinarViewers
         return $response['list'];
     }
 
+
+    /**
+     * Возвращает полный отчет по вебинару
+     * @param string $webinarId Id вебинара
+     * @return array
+     * @throws Bizon365APIException
+     * @see https://blog.bizon365.ru/api/v1/webinars/reports/
+     */
+    public function getWebinarReport(
+        string $webinarId
+    ): array {
+        $response = $this->request(
+            'webinars/reports/get',
+            'GET',
+            [
+                'webinarId' => $webinarId
+            ]
+        );
+
+        // Проверка статуса ответа
+        if (! $this->http->isSuccess()) {
+            $httpCode = $this->http->getHTTPCode();
+            $response = $this->http->getResponse();
+            throw new Bizon365APIException(
+                "Не удалось получить список доступных отчетов по вебинарам (HTTP code {$httpCode}): {$response}"
+            );
+        }
+
+        if (! empty($response['errors'])) {
+            $jsonErrors = $this->toJSON($response['errors']);
+            throw new Bizon365APIException("Ошибки при загрузке доступных отчетов по вебинарам: {$jsonErrors}");
+        }
+
+        return $response['report'];
+    }
+
     /**
      * Возвращает список ВСЕХ доступных отчетов по вебинарам
      * @param int $skip Пропустить указанное число записей
