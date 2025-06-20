@@ -1,5 +1,5 @@
 {
-    "name": "andrey-tech/bizon365-api-php",
+    "name": "maximryzhkov/bizon365-api-php",
     "description": "Обертка на PHP7+ для работы с API v1 сервиса Бизон 365 c троттлингом запросов и логированием в файл",
     "keywords": [ "bizon365", "bizon", "api", "api-wrapper", "throttling", "logging" ],
     "homepage": "https://github.com/andrey-tech/bizon365-api-php",
